@@ -1,0 +1,9 @@
+<li *ngIf="!isAuthenticated">
+  <a href="#login" (click)="login()">Login</a>
+</li>
+<li *ngIf="isAuthenticated">
+  <a href="#">{{userName}}</a>
+</li>
+<li *ngIf="isAuthenticated">
+  <a href="#logout" (click)="logout()">Logout</a>
+</li>
