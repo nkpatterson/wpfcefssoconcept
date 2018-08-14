@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Msal from 'msal';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -7,23 +8,17 @@ import * as Msal from 'msal';
 export class AuthService {
 
   private userAgentApp: Msal.UserAgentApplication;
-  private appConfig = {
-    clientID: '1d28fc5d-97e1-4fa6-9363-f925383fe75a',
-    authority: 'https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47',
-    scopes: ["openid"],
-    redirectUri: 'http://localhost:4200'
-  };
 
   constructor() {
 
     let logger = new Msal.Logger(this.loggerCallback, { level: Msal.LogLevel.Verbose });
     this.userAgentApp = new Msal.UserAgentApplication(
-      this.appConfig.clientID,
-      this.appConfig.authority,
+      environment.authConfig.clientID,
+      environment.authConfig.authority,
       this.authCallback, {
         logger: logger,
         cacheLocation: 'localStorage',
-        redirectUri: this.appConfig.redirectUri,
+        redirectUri: environment.authConfig.redirectUri,
         navigateToLoginRequestUrl: false,
         state: 'authconcept'
       }
@@ -35,7 +30,7 @@ export class AuthService {
   }
 
   login(): void {
-    this.userAgentApp.loginRedirect(this.appConfig.scopes);
+    this.userAgentApp.loginRedirect(environment.authConfig.scopes);
   }
 
   logout(): void {
