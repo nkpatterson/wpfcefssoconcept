@@ -23,3 +23,10 @@ The WPF Sample project was taken from: https://github.com/cefsharp/CefSharp.Mini
 6. Make sure the browser page loads initially
 7. Click the Sign In button at the top of the WPF app and follow prompts to sign in with your Azure AD credentials
 8. You should see the page refresh with the user info displayed in the browser
+
+## Notable Code
+The code that makes this work is in the MainWindow.xaml.cs file of the CefSharp.MinimalExample.Wpf project. In it, you will find a method called `GenerateJscript()` which does the work of setting the loaded browser's localStorage with key/values required by the Microsoft Authentication Library (MSAL). 
+
+Specifically, `msal.idtoken` is set to the ID token returned from the login and `msal.client.info` is manually constructed and base64 encoded with the user and tenant IDs. This tricks the MSAL into thinking it's already authenticated the user. 
+
+**Important:** Additional key/values may need to be set to make MSAL function 100%. This is merely a prototype.
